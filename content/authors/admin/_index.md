@@ -23,7 +23,9 @@ bio: My research interests include biogeography, SDMs, terrestrial carbon dynami
 interests:
 - GIS/RS
 - Python/R
-- SDMs
+- Species distribution models (SDMs)
+- Forest ecology/ Forest carbon dynamics
+- Forest Inventory and Analysis
 
 education:
   courses:
