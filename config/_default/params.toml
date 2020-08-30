@@ -107,7 +107,7 @@ directions = "Enter Johnson Hall Building and take the stairs to Office 223 on F
 office_hours = ["Tuesday 11:00 to 13:00", "Thursday 11:00 to 13:00"]
 
 # Enter an optional link for booking appointments (e.g. calendly.com).
-appointment_url = "ykwon@memphis.edu"
+appointment_url = "calendly.com"
 
 # Contact links
 #   Set to `[]` to disable, or comment out unwanted lines with a hash `#`.
