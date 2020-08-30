@@ -32,7 +32,7 @@ education:
   - course: PhD in Geography
     institution: The State University of New York at Buffalo
     year: 2012
-  - course: MS in Environmental Studies (Landscape Archtecture)
+  - course: MS in Environmental Studies
     institution: Seoul National University
     year: 2004
   - course: BSc in  Forest Resources and Environmental Science
