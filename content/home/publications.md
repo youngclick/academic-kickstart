@@ -25,10 +25,10 @@ subtitle = ""
 
   # Filter posts by a taxonomy term.
   [content.filters]
-    tag = "SDMs"
-    category = "Biogeography"
-    publication_type = "Journal article"
-    author = "Neupane, D., Kwon, Y., Risch, T. S., & Johnson, R. L."
+    tag = ""
+    category = ""
+    publication_type = ""
+    author = ""
     exclude_featured = false
   
 [design]
