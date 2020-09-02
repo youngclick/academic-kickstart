@@ -11,7 +11,7 @@ We tested two questions. First, whether MODIS CUE is constant or whether it vari
 MODIS CUE and F/M ZCUE both varied similarly and significantly in relation to forest type, and climatic and geographic factors, strongly supporting a variable rather than a constant CUE. The CUE was significantly higher in deciduous than in mixed and evergreen forests. Regression models indicated that CUE decreased with increases in temperature and precipitation and increased with latitude and altitude. The similar trends in MODIS CUE and F/M ZCUE support the use of the more easily obtained MODIS CUE."
 featured: false
 publication: "*International Journal of Remote Sensing*"
-url_pdf: ""
+url_pdf: "/files/Kwon_Carbon Use Efficiency_IJRS_2013.pdf"
 doi: "https://doi.org/10.1080/01431161.2013.838711"
 ---
 

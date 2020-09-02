@@ -41,4 +41,13 @@ date_format = "Jan 2006"
   date_end = "2020-08-31"
   description = """Taught biogeography/ GIS/RS and Python Programming."""
 
+[[experience]]
+  title = "Visiting Assistant Professor"
+  company = "University of Delaware"
+  company_url = ""
+  location = "Delaware, DE"
+  date_start = "2011-09-01"
+  date_end = "2013-08-31"
+  description = """Taught GIS/RS and Python Programming."""
+
 +++

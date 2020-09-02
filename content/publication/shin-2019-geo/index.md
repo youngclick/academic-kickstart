@@ -14,6 +14,6 @@ Conclusion
 Chronic affinity disadvantages were disproportionately accumulated in socially disadvantaged areas. We showed links between commonly co-observed chronic diseases at the population level and systematically explored the complexity of affinity and socio-economic disparities. Our affinity score, based on publicly available datasets, served as a surrogate for multimorbidity at the population level, which may assist policymakers and public health planners to identify urgent hot spots for chronic disease and allocate clinical, medical and healthcare resources efficiently."
 featured: false
 publication: "*JAMIA Open*"
-url_pdf: ""
+url_pdf: "/files/Shin el al 2019 Geo-clustered chronic affinity.pdf"
 doi: "https://doi.org/10.1093/jamiaopen/ooz029"
 ---
