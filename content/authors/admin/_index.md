@@ -69,4 +69,4 @@ email: "ykwon@memphis.edu"
 #- Visitors
 ---
 
-Youngsang Kwon is an Associate Professor of Earth Sciences at the University of Memphis. Grounded in the theoretical framework of biogeography, his work primarily deals with the development of spatially explicit models for enriching our understanding of forest community patterns and responses to changing environments (natural and anthropogenic) in the multi-scale contexts (spatial and temporal) of landscapes.
+Youngsang Kwon is an Associate Professor of Earth Sciences at the University of Memphis. Grounded in the theoretical framework of biogeography, his work primarily deals with the development of spatially explicit models for enriching our understanding of forest community patterns and responses to changing environments (natural and anthropogenic) in the multi-scale contexts (spatial and temporal) of landscapes. {{% staticref "files/cv.pdf" %}}Download my CV{{% /staticref %}}
