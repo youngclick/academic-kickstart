@@ -12,6 +12,6 @@ MODIS CUE and F/M ZCUE both varied similarly and significantly in relation to fo
 featured: false
 publication: "*International Journal of Remote Sensing*"
 url_pdf: ""
-doi: ""
+doi: "https://doi.org/10.1080/01431161.2013.838711"
 ---
 
