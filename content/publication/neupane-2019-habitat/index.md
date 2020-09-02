@@ -1,6 +1,6 @@
 ---
 title: "Habitat use by Asian elephants: Context matters"
-date: 201-01-15
+date: 2019-01-15
 publishDate: 2020-05-04T16:11:16.228090Z
 authors: ["D.Neupane","Y.Kwon","T.S.Risch","C.Williams","R.L.Johnson"]
 publication_types: ["2"]
