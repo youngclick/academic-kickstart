@@ -6,7 +6,7 @@ active = true  # Activate this widget? true/false
 weight = 65  # Order that this section will appear.
 
 title = "Projects"
-subtitle = "will be updated, contact via email"
+subtitle = "under construction, please email inquiry"
 
 [content]
   # Page type to display. E.g. project.
