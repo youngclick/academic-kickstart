@@ -1,6 +1,6 @@
 ---
 title: "Comparisons of the Spatial Extent of Eastern U.S. Tree Species between Expert-Drawn Little’s Range Map and Forest Inventory and Analysis"
-date: 2013-09-26
+date: 2021-03-19
 publishDate: 2021-03-19
 authors: ["B.Baker", Y.Kwon"]
 publication_types: ["2"]
