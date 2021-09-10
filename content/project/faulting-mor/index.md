@@ -1,19 +1,18 @@
 ---
-title: 'Faulting at Mid-Ocean Ridge'
-subtitle: 'How faulting styles changes along ridge axis'
-summary: Aims to understand how faulting styles change in time and along mid-ocean ridge axis using numerical modeling. 
+title: 'Integrative data-driven modeling of species interactions on tree growth and migration'
+subtitle: 'TIGr model development'
+summary: Biogeographic understanding of the effect of species interactions on tree growth and translate that mechanistic knowledge into predicting species range dynamics. 
 authors:
 - admin
 tags:
-- Faulting
-- Mid-Ocean Ridge
-- Oceanic Core Complex
+- FIA
+- Biogeography
+- Tree growth model
 categories:
 - research
-- long-term tectonic modeling
 
 date: ""
-lastmod: "2020-05-05"
+lastmod: "2021-09-05"
 featured: false
 draft: false
 
@@ -26,7 +25,7 @@ external_link: ""
 # Focal point options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
 image:
   placement: 1
-  caption: Detailed comparison of fault geometry before and after the formation of a higher angle normal fault at the magma-rich ("High M") end of a ridge segment while a large offset normal fault forming at the magma-poor ("Low M") end. For more, see [(Tian and Choi, EPSL, 2017)](https://dx.doi.org/10.1016/j.epsl.2016.10.033)
+  caption: Conceptual image of tree species northward migration. 
   focal_point: ""
   preview_only: false
   
@@ -48,7 +47,8 @@ url_video: ""
 # slides: example
 slides: ""
 ---
+Project Title: Integrative data-driven modeling to evaluate the impact of species interactions on tree growth and migration across environmental gradients
 
-The main goal of this project is to understand how magmatic processes at the spreading center of mid-ocean ridge can determine 
-faulting styles that are variable along the ridge axis. A novel aspect of the project is to include explicitly the along-axis variability in magmatic activity. To see some numerical models in action, please go to [the project's Figshare page](https://doi.org/10.6084/m9.figshare.4083219.v1). We are trying to extend spatial and temporal scales of these models to explore a longer portion of oceanic lithospehre's lifespan, from birth at mid-ocean ridge to subduction.
+
+Accurate prediction of tree growth in response to environmental variations is a critical component of ecosystem management to minimize the negative impact of climate changes. Among many other factors, tree interactions at local scale are being recognized as one of the key determinants of tree growth and colonization. However, we currently do not have a complete understanding of how interspecific interactions affect the dynamics in tree communities and biogeographic responses. Consequently, accounting for tree interactions into mathematical modeling remains challenging, particularly due to (1) insufficient in situ experimental data and (2) the difficulty in taking insurmountable pairs of species associations into consideration. In this project, we address these challenges by developing predictive data-driven tree growth models through integration with other complementary approaches and demonstrating the effectiveness using Forest Inventory and Analysis (FIA), which provides consistent nationwide tree census information over 50 years. The overarching goal of the proposed research is to build a new biogeographic understanding of the effect of species interactions on tree growth and translate that mechanistic knowledge into predicting species range dynamics by taking the eastern US data as an example. To achieve this goal, we set two objectives.  First, we aim to develop new data-driven models of tree species interaction growth (TIGr) that incorporate both abiotic factors and biotic interspecies interactions to accurately model species growth and abundance at multiple scales. Through independent use of existing niche-based and process-based models, we will construct the Sparse Identification of Nonlinear Dynamics (SINDy) model to disentangle the effects of abiotic and biotic factors on tree growth and extract key variables that can be used as features for Deep learning algorithms. Second, we aim to evaluate tree species migration potential, through the lens of the abundant-centre hypothesis, by examining asymmetric geographic patterns between TIGr model outputs of growth and abundance compared with the observed and predicted range. We will depict future redistribution of eastern US tree species following three climate change scenarios and compare them with independent process-based predictions thus evidence-based effective forest management can be developed for climate change mitigation. 
 
