@@ -1,22 +1,21 @@
 ---
-title: 'Sources of Stress in Intraplate Seismic Zones'
+title: 'GeoAllies'
 #subtitle: ''
-summary: Aims to estimate the magnitude of stress relevant to earthquake generation for intraplte seismic zones
+summary: Experimental field study to assess the impact of an allyship program on the supportive allyship attitudes and behaviors
 authors:
 - admin
 tags:
-- Intrplate Earthquakes
-- Intraplate Seismic Zones
-- Seismic Tomography
-- Stress
-- PyLith
-- ASPECT
+- Allyship
+- Field trip
+- Diversity
+- Undergraduate
+
 categories:
-- research
-- seismotectonics
+- teaching
+- mentorship
 
 date: ""
-lastmod: "2020-05-05"
+lastmod: "2021-05-05"
 featured: false
 draft: false
 
@@ -29,7 +28,7 @@ external_link: ""
 # Focal point options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
 image:
   placement: 1
-  caption: One study area includes the New Madrid Seismic Zone in the Central U.S.
+  caption: 
   focal_point: ""
   preview_only: false
   
@@ -52,9 +51,9 @@ url_video: ""
 slides: ""
 ---
 
-The main goal of this project is to compute magnitudes and spatial distribution of stresses responsible for earthquakes occurring in regions far from plate boundaries based on seismically imaged heterogeneities in mantle and known geological structures like layers of different kinds of rock or major fault zones. Computed stress distributions can be compared with the observed seismicity. The study area we have been working on include the New Madrid Seismic Zone in the central US, the Charlesvoix Seismic Zone in eastern Canada and the Korean peninsular. 
+We propose an experimental field study to assess the impact of an allyship program on the supportive allyship attitudes and behaviors, effective mentorship, and student performance of participating faculty and graduate students (academic allies), and their UR and majority students.
 
-{{< figure src="/img/CSZ_intro.png" title="An on-going study on the Charlesvoid Seismic Zone. The impact crater and Paleozoic rift faults together increases differential stress in the areas of high seismicity. For more details, see [(Fadugba et al., JGR, 2019)](https://dx.doi.org/10.1029/2019JB017831)" >}}
+We accomplish this through longitudinal, multisource measurement centered primarily before and after the execution of academic field trips.
+Our proposed study provides a mechanism to educate academic allies on effective allyship, prior to field efforts, and a space for them to practice, so that they transfer learnings to their trips. The outcomes have the possibility of being transformational: effective mentorship and ethical leadership could be role modeled to UR and majority-member students on the trip, in a “train-the-trainer” model.
 
-{{< figure src="/img/CEUS_intro.png" title="An on-going study on the seismic zones in the Central and Eastern US. The upper mantle heterogeneities clearly contribute to differerntial stresses in the known seismic zones. Discrepancy between the predicted and the observed faulting styles are attributed to stress sources not included in this study. This work is in review for publication in Geophys. J. Int." >}}
 
