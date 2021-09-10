@@ -1,5 +1,5 @@
 ---
-title: 'NAIP & LiDAR for ripiraian corridor inventory'
+title: 'Ripiraian corridor inventory using NAIP & LiDAR'
 #subtitle: ''
 summary: Improved remote-sensing imagery techniques to identify riparian corridor characteristics in headwater streams and inventory wetlands, lakes, and permanent streams in West Tennessee.  
 authors:
