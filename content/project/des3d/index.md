@@ -59,5 +59,4 @@ Project Title: Improved remote-sensing imagery techniques to identify riparian c
 
 ## NAIP & LiDAR to inventory riparian corridor characteristics in headwater streams in West Tennessee 
 (2) identify and inventory current riparian corridor and bufferstrip characteristics in watershed headwater streams by integrating fine-resolution aerial imagery from the USDA National Agricultural Imagery Program (NAIP) and Light Detection and Ranging (LiDAR) data. This project will also provide scalable and transferable methods (R code for the PROSPER model and Python code for automating NAIP / LiDAR image processing under the Google Earth Engine (GEE) and High Performance Computing (HPC) platforms) useful for state agencies to apply to newer imagery (NAIP updates every two years) or to other streams’ monitoring efforts for the tracking of spatio-temporal changes to riparian characteristics.
-{{< figure src="/img/GEEflowchart.png" title="Work flow for clasification using GEE & HPC" >}}
 
