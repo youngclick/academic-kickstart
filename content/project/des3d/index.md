@@ -1,21 +1,21 @@
 ---
-title: 'Geodynamic code development'
+title: 'NAIP & LiDAR for ripiraian corridor inventory'
 #subtitle: ''
 summary: Aims to improve DES3D (Dynamic Earth Solver in 3D), an open-source geodynamic modeling code by extending the code's functionality and accelerating its performance.
 authors:
 - admin
 tags:
-- DES3D
+- NAIP
 - High-Performance Computing
-- GPU
-- Non-linear rheologies
-- rate-and-state friction
-- Adaptive Mesh Refinement
+- Google Earth Engine
+- PROSPER
+- LiDAR
+- Python
 categories:
 - research
 
 date: ""
-lastmod: "2020-05-06"
+lastmod: "2021-09-06"
 featured: false
 draft: false
 
@@ -51,16 +51,13 @@ url_video: ""
 slides: ""
 ---
 
-The main goal of this project is to improve [DES3D (Dynamic Earth Solver in 3D)](https://github.com/tan2/dynearthsol), an open-source geodynamic modeling code. in terms of the types of physical processes it can model and the speed 
+Project Title: Improved remote-sensing imagery techniques to identify riparian corridor characteristics in headwater streams and inventory wetlands, lakes, and permanent streams in West Tennessee.  
 
-## Performance
-DES3D has been enabled to run on NVIDIA GPUs. Kernel functions for the main routines have been written in CUDA. The overall parallelization is illustrated in the figure below.
-{{< figure src="/img/DES3DFlowChart.png" title="How DES3D works when using GPU" >}}
-When run on GPU, a three-dimensional model for core complex formation showed speedup of 40-60 relative to the performance on a 16-thread CPU. The speedup varies according to the problem size, which tends to increase over the course due to mesh refinement.
-{{< figure src="/img/GPUacceleration.png" title="Core complex model and performance on GPU relative to CPU" >}}
-[This video](https://youtu.be/zr-4HIg7_14) shows the code in action.
+## PROSPER model development
+(1) test the USGS Probability of Streamflow Permanence (PROSPER) model in West Tennessee, specifically the Lower Mississippi-Hatchie Hydrologic Unit (HUC 4-0801), to examine current wetlands, lakes, and permanent streams in the region
+{{< figure src="/img/prosperStudyArea.png" title="Lower Mississippi-Hatchie HUC 4 region" >}}
 
-## Functionality
-To extend DES3D's functionality, we are focusing on merging the exploratory work on implementing the rate-and-state fricgtion law by [Tong and Lavier (Nature Comm., 2018)](https://dx.doi.org/10.1038/s41467-018-06390-z). With this new friction law, we can better model an entire earthquake cycle as well as the consequences of its numerous repetition.
-{{< figure src="/img/EqCycle.png" title="Earthquake cycles modeled with a rate-and-friction law implemented in DES3D" >}}
+## NAIP & LiDAR to inventory riparian corridor characteristics in headwater streams in West Tennessee 
+(2) identify and inventory current riparian corridor and bufferstrip characteristics in watershed headwater streams by integrating fine-resolution aerial imagery from the USDA National Agricultural Imagery Program (NAIP) and Light Detection and Ranging (LiDAR) data. This project will also provide scalable and transferable methods (R code for the PROSPER model and Python code for automating NAIP / LiDAR image processing under the Google Earth Engine (GEE) and High Performance Computing (HPC) platforms) useful for state agencies to apply to newer imagery (NAIP updates every two years) or to other streams’ monitoring efforts for the tracking of spatio-temporal changes to riparian characteristics.
+{{< figure src="/img/EqCycle.png" title="Work flow for clasification using GEE & HPC" >}}
 
