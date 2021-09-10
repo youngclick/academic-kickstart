@@ -1,7 +1,7 @@
 ---
 title: 'GeoAllies'
 #subtitle: 'Feild trip project'
-summary: Experimental field study to assess the impact of an allyship program on the supportive allyship attitudes and behaviors
+summary: Experimental field study to assess the impact of an allyship program on the supportive allyship attitudes and behaviors.
 authors:
 - admin
 tags:
@@ -33,7 +33,7 @@ image:
   preview_only: false
   
 links: ""
-#- icon: twitter
+#  icon: twitter
 #  icon_pack: fab
 #  name: Follow
 #  url: https://twitter.com/eunseochoi
@@ -50,6 +50,7 @@ url_video: ""
 # slides: example
 slides: ""
 ---
+
 Title: GeoAllies NSF proejct
 
 We propose an experimental field study to assess the impact of an allyship program on the supportive allyship attitudes and behaviors, effective mentorship, and student performance of participating faculty and graduate students (academic allies), and their UR and majority students.
