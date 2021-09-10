@@ -1,7 +1,7 @@
 ---
 title: 'NAIP & LiDAR for ripiraian corridor inventory'
 #subtitle: ''
-summary: Aims to improve DES3D (Dynamic Earth Solver in 3D), an open-source geodynamic modeling code by extending the code's functionality and accelerating its performance.
+summary: Improved remote-sensing imagery techniques to identify riparian corridor characteristics in headwater streams and inventory wetlands, lakes, and permanent streams in West Tennessee.  
 authors:
 - admin
 tags:
