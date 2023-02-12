@@ -1,14 +1,14 @@
 ---
-title: 'GeoAllies'
+title: 'Mapping Spatio-temporal Groundwater Storage Changes in Memphis Aquifer: Integration of GRACE satellite, Ground-based Estimates and Hydrologic Modeling approach'
 #subtitle: 'Feild trip project'
-summary: Experimental field study to assess the impact of an allyship program on the supportive allyship attitudes and behaviors.
+summary: 
 authors:
 - admin
 tags:
-- Allyship
-- Field trip
-- Diversity
-- Undergraduate
+- GRACE
+- Downscaling
+- Machine Learning
+- Groundwater
 
 categories:
 - research
@@ -51,11 +51,8 @@ url_video: ""
 slides: ""
 ---
 
-Title: GeoAllies NSF proejct
+Title: GRACE Project
 
-We propose an experimental field study to assess the impact of an allyship program on the supportive allyship attitudes and behaviors, effective mentorship, and student performance of participating faculty and graduate students (academic allies), and their UR and majority students.
-
-We accomplish this through longitudinal, multisource measurement centered primarily before and after the execution of academic field trips.
-Our proposed study provides a mechanism to educate academic allies on effective allyship, prior to field efforts, and a space for them to practice, so that they transfer learnings to their trips. The outcomes have the possibility of being transformational: effective mentorship and ethical leadership could be role modeled to UR and majority-member students on the trip, in a “train-the-trainer” model.
+Water resource management requires better understanding of trend and seasonality of groundwater that has historically relied on a network of well levels or hydrological models. The Memphis aquifer is the main source for public supply water in western Tennessee; however, spatio-temporal mapping of groundwater in this region is lacking. NASA’s Gravity Recovery and Climate Experiment (GRACE) has been providing a powerful data source for large scale groundwater assessments although its native spatial resolution (1° by 1°) has been incompatible for local to regional scale water management purpose. This proposal aims to downscaling GRACE-derived groundwater storage (GWS) at a target resolution of 0.25° by 0.25° from January 2003 to December 2016 in Shelby County, Tennessee. 
 
 
