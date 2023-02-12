@@ -1,6 +1,6 @@
 ---
 title: "Sediment input, alongshore transport, and coastal mixing in the northeastern Gulf of Mexico based on detrital-zircon geochronology"
-date: 
+date: 2023
 publishDate: 2023-02-04T16:11:16.228090Z
 authors: ["K.Giles", "W.Jackson", "M.McKay", "D.Beebe", "D.Larsen", "Y.Kwon", "B.Shaulis"]
 publication_types: ["2"]
