@@ -37,3 +37,5 @@ Memphis Heat Watch was conducted as one of eight selected cities under NOAA's Ce
 The campaign generated high-value datasets linking land surface temperature, ambient temperature, and canopy structure, supporting ongoing manuscript development and follow-up collaborations.
 
 Heat Watch Campaign map: https://capa-strategies.maps.arcgis.com/apps/webappviewer/index.html?id=0fb40a834af74fa882f5aeb6af777a7e
+
+Interactive explorer (HTML demo): [/files/heat_canopy_demo.html](/files/heat_canopy_demo.html)
