@@ -35,8 +35,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#fff}
 .stat-l{font-size:0.6rem;color:#64748b}
 .map-cd{border:1px solid #e5e7eb;border-radius:0.4rem;overflow:hidden;position:relative}
 .map-t{font-size:0.78rem;font-weight:600;color:#1e293b;padding:0.4rem 0.7rem;background:#f9fafb;border-bottom:1px solid #e5e7eb}
-.cw{position:relative}
-.cw canvas{display:block;width:100%;cursor:crosshair}
+.cw{position:relative;overflow:hidden}
+.cw canvas{display:block;cursor:crosshair}
 .tip{position:absolute;pointer-events:none;background:rgba(255,255,255,0.96);border:1px solid #cbd5e1;border-radius:0.35rem;padding:0.45rem 0.55rem;font-size:0.7rem;box-shadow:0 2px 8px rgba(0,0,0,0.12);z-index:10;white-space:nowrap}
 .tip b{color:#1e293b}
 .sep{border-top:1px solid #e5e7eb;margin:0.15rem 0}
@@ -46,7 +46,29 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#fff}
 .lgd-item{display:flex;align-items:center;gap:0.2rem}
 .lgd-sq{width:9px;height:9px;border-radius:2px}
 .note{font-size:0.65rem;color:#9ca3af;line-height:1.35;margin-top:0.2rem}
-@media(max-width:800px){.row{grid-template-columns:1fr}.side{max-height:none}}
+.zoom-bar{position:absolute;top:10px;left:10px;z-index:20;display:flex;flex-direction:column;gap:2px}
+.zoom-btn{width:30px;height:30px;border:1px solid #cbd5e1;background:rgba(255,255,255,0.92);border-radius:4px;font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#374151;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.zoom-btn:hover{background:#f1f5f9}
+.zoom-info{font-size:0.65rem;text-align:center;color:#64748b;background:rgba(255,255,255,0.85);border-radius:3px;padding:1px 4px;margin-top:1px}
+.fb-section{margin-top:1rem;border-top:1px solid #e5e7eb;padding-top:1rem}
+.fb-title{font-size:1rem;font-weight:700;color:#1e293b;margin-bottom:0.5rem}
+.fb-sub{font-size:0.82rem;color:#64748b;margin-bottom:0.75rem;line-height:1.5;max-width:900px}
+.fb-form{display:flex;flex-direction:column;gap:0.5rem;width:100%;max-width:900px}
+.fb-row{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;width:100%}
+.fb-input{padding:0.45rem 0.6rem;border:1px solid #d1d5db;border-radius:0.35rem;font-size:0.8rem;font-family:inherit;outline:none;transition:border-color 0.15s}
+.fb-input:focus{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,0.15)}
+.fb-textarea{padding:0.5rem 0.6rem;border:1px solid #d1d5db;border-radius:0.35rem;font-size:0.8rem;font-family:inherit;outline:none;resize:vertical;min-height:100px;width:100%;transition:border-color 0.15s}
+.fb-textarea:focus{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,0.15)}
+.fb-btn{padding:0.5rem 1.25rem;background:#1a2744;color:#fff;border:none;border-radius:0.35rem;font-size:0.82rem;font-weight:600;cursor:pointer;align-self:flex-start;transition:background 0.15s}
+.fb-btn:hover{background:#2d3a5c}
+.fb-list{margin-top:0.6rem;display:flex;flex-direction:column;gap:0.4rem;width:100%;max-width:900px}
+.fb-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:0.4rem;padding:0.6rem 0.85rem}
+.fb-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.2rem}
+.fb-card-name{font-size:0.82rem;font-weight:600;color:#1e293b}
+.fb-card-time{font-size:0.68rem;color:#94a3b8}
+.fb-card-body{font-size:0.82rem;color:#475569;line-height:1.5;margin-top:0.15rem}
+.fb-card-topic{display:inline-block;font-size:0.68rem;background:#dbeafe;color:#1d4ed8;padding:0.12rem 0.45rem;border-radius:0.2rem;margin-top:0.25rem}
+@media(max-width:800px){.row{grid-template-columns:1fr}.side{max-height:none}.fb-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -61,10 +83,20 @@ const TR = [{"n":"31","c":[237.32,96.04],"r":[[[236.35,95.45],[236.37,95.72],[23
 const e = React.createElement;
 const {useState,useRef,useEffect,useCallback} = React;
 
+// Landmarks in projected coordinates
+const LANDMARKS = [
+  {name:'Downtown',        x:230.98, y:97.67, abbr:'DT'},
+  {name:'Univ. of Memphis',x:241.12, y:94.26, abbr:'UoM'},
+  {name:'Memphis Intl Airport', x:237.55, y:85.84, abbr:'MEM'},
+  {name:'Shelby Farms Park',x:250.09, y:96.07, abbr:'SFP'},
+  {name:'Germantown',      x:252.68, y:90.74, abbr:'GT'},
+  {name:'Whitehaven',      x:232.62, y:84.25, abbr:'WH'},
+  {name:'Bartlett',         x:246.88, y:103.76, abbr:'BT'},
+  {name:'Cordova',          x:254.49, y:97.73, abbr:'CV'}
+];
+
 function App(){
-  // Display mode
   const [layer,setLayer] = useState('overlay');
-  // Sliders
   const [tempMin,setTempMin] = useState(95);
   const [tempMax,setTempMax] = useState(99);
   const [canMin,setCanMin] = useState(0);
@@ -73,23 +105,36 @@ function App(){
   const [incMax,setIncMax] = useState(50000);
   const [povMin,setPovMin] = useState(20);
   const [povMax,setPovMax] = useState(75);
-  // Toggles
   const [useTemp,setUseTemp] = useState(true);
   const [useCan,setUseCan] = useState(true);
   const [useInc,setUseInc] = useState(true);
   const [usePov,setUsePov] = useState(false);
   const [showTracts,setShowTracts] = useState(true);
   const [hovered,setHovered] = useState(null);
+  // Zoom/pan state
+  const [zoom,setZoom] = useState(1);
+  const [panX,setPanX] = useState(0);
+  const [panY,setPanY] = useState(0);
+  const [dragging,setDragging] = useState(false);
+  const dragStart = useRef(null);
+  const panStart = useRef(null);
+  // Feedback
+  const [comments,setComments] = useState([]);
+  const [fbName,setFbName] = useState('');
+  const [fbTopic,setFbTopic] = useState('general');
+  const [fbText,setFbText] = useState('');
+
   const canvasRef = useRef(null);
-
   const G = D.grid;
-  const W = 960, PAD = 8;
-  const SC = (W-PAD*2)/G.ncols;
-  const H = Math.ceil(SC*G.nrows+PAD*2);
-  const toX = c => PAD+(c-G.xmin)*SC;
-  const toY = r => PAD+(G.nrows-1-(r-G.ymin))*SC;
+  const BASE_W = 960, PAD = 8;
+  const SC = (BASE_W-PAD*2)/G.ncols;
+  const BASE_H = Math.ceil(SC*G.nrows+PAD*2);
 
-  // Colors
+  // Projected -> canvas px (with zoom/pan)
+  const toX = c => (PAD+(c-G.xmin)*SC)*zoom + panX;
+  const toY = r => (PAD+(G.nrows-1-(r-G.ymin))*SC)*zoom + panY;
+  const cellSZ = SC*zoom;
+
   function lerp(a,b,t){
     const ah=parseInt(a.slice(1),16),bh=parseInt(b.slice(1),16);
     const ar=(ah>>16)&0xff,ag=(ah>>8)&0xff,ab=ah&0xff;
@@ -109,22 +154,19 @@ function App(){
     pov:['#fef3c7','#fcd34d','#f59e0b','#92400e']
   };
 
-  // Match logic
   function cellMatch(c){
-    let active=0, matched=0;
-    if(useTemp && c.t!=null)  { active++; if(c.t>=tempMin && c.t<=tempMax) matched++; }
-    if(useCan && c.cn!=null)  { active++; if(c.cn>=canMin && c.cn<=canMax) matched++; }
-    if(useInc && c.inc!=null) { active++; if(c.inc>=incMin && c.inc<=incMax) matched++; }
-    if(usePov && c.pov!=null) { active++; if(c.pov>=povMin && c.pov<=povMax) matched++; }
+    let active=0,matched=0;
+    if(useTemp && c.t!=null)  {active++; if(c.t>=tempMin && c.t<=tempMax) matched++;}
+    if(useCan && c.cn!=null)  {active++; if(c.cn>=canMin && c.cn<=canMax) matched++;}
+    if(useInc && c.inc!=null) {active++; if(c.inc>=incMin && c.inc<=incMax) matched++;}
+    if(usePov && c.pov!=null) {active++; if(c.pov>=povMin && c.pov<=povMax) matched++;}
     return {active,matched};
   }
-
   function cellColor(c){
     if(layer==='temp')   return scaleC(c.t,93,99,CL.temp);
     if(layer==='canopy') return scaleC(c.cn,0,75,CL.cn);
     if(layer==='income') return scaleC(c.inc,12000,212000,CL.inc);
     if(layer==='poverty')return scaleC(c.pov,0,70,CL.pov);
-    // overlay mode
     const m=cellMatch(c);
     if(m.active===0) return '#e2e8f0';
     if(m.matched===m.active) return '#dc2626';
@@ -137,59 +179,170 @@ function App(){
   const draw = useCallback(()=>{
     const cv=canvasRef.current; if(!cv) return;
     const dpr=window.devicePixelRatio||1;
-    cv.width=W*dpr; cv.height=H*dpr;
-    cv.style.width=W+'px'; cv.style.height=H+'px';
+    cv.width=BASE_W*dpr; cv.height=BASE_H*dpr;
+    cv.style.width=BASE_W+'px'; cv.style.height=BASE_H+'px';
     const ctx=cv.getContext('2d');
     ctx.scale(dpr,dpr);
-    ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#f1f5f9'; ctx.fillRect(0,0,BASE_W,BASE_H);
 
+    // Cells
     D.cells.forEach(c=>{
       const col=cellColor(c);
-      const x=toX(c.x-0.5),y=toY(c.y+0.5);
+      const x=toX(c.x-0.5), y=toY(c.y+0.5);
+      if(x+cellSZ<0||x>BASE_W||y+cellSZ<0||y>BASE_H) return;
       ctx.fillStyle=col||'#f8fafc';
-      ctx.fillRect(x,y,SC,SC);
+      ctx.fillRect(x,y,cellSZ+0.5,cellSZ+0.5);
     });
 
+    // Tract boundaries
     if(showTracts){
-      ctx.strokeStyle='rgba(100,116,139,0.5)';
-      ctx.lineWidth=1;
+      ctx.strokeStyle='rgba(55,65,81,0.55)';
+      ctx.lineWidth = Math.max(0.8, 1.2*zoom);
       TR.forEach(tr=>{
         if(!tr.r||!tr.r[0]) return;
         ctx.beginPath();
         tr.r[0].forEach((p,i)=>{
-          const px=PAD+(p[0]-G.xmin)*SC, py=PAD+(G.nrows-1-(p[1]-G.ymin))*SC;
+          const px=(PAD+(p[0]-G.xmin)*SC)*zoom+panX;
+          const py=(PAD+(G.nrows-1-(p[1]-G.ymin))*SC)*zoom+panY;
           i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
         });
         ctx.closePath(); ctx.stroke();
       });
     }
 
+    // Landmarks
+    const fontSize = Math.max(9, Math.min(13, 10*zoom));
+    ctx.font = 'bold '+fontSize+'px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    LANDMARKS.forEach(lm=>{
+      const lx = (PAD+(lm.x-G.xmin)*SC)*zoom+panX;
+      const ly = (PAD+(G.nrows-1-(lm.y-G.ymin))*SC)*zoom+panY;
+      if(lx<-20||lx>BASE_W+20||ly<-20||ly>BASE_H+20) return;
+      // Pin dot
+      ctx.beginPath();
+      ctx.arc(lx,ly,3*zoom,0,Math.PI*2);
+      ctx.fillStyle='#1e293b';
+      ctx.fill();
+      ctx.strokeStyle='#fff';
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+      // Label background
+      const label = zoom>=1.5 ? lm.name : lm.abbr;
+      const tw = ctx.measureText(label).width;
+      const bx=lx-tw/2-3, by=ly-fontSize-5;
+      ctx.fillStyle='rgba(255,255,255,0.88)';
+      ctx.fillRect(bx,by,tw+6,fontSize+4);
+      ctx.strokeStyle='rgba(100,116,139,0.4)';
+      ctx.lineWidth=0.5;
+      ctx.strokeRect(bx,by,tw+6,fontSize+4);
+      // Label text
+      ctx.fillStyle='#1e293b';
+      ctx.fillText(label, lx, ly-4);
+    });
+
+    // Hovered cell
     if(hovered){
       const c=hovered.cell;
       const x=toX(c.x-0.5),y=toY(c.y+0.5);
       ctx.strokeStyle='#1e293b'; ctx.lineWidth=2;
-      ctx.strokeRect(x,y,SC,SC);
+      ctx.strokeRect(x,y,cellSZ,cellSZ);
     }
-  },[layer,showTracts,hovered,useTemp,useCan,useInc,usePov,tempMin,tempMax,canMin,canMax,incMin,incMax,povMin,povMax]);
+  },[layer,showTracts,hovered,useTemp,useCan,useInc,usePov,tempMin,tempMax,canMin,canMax,incMin,incMax,povMin,povMax,zoom,panX,panY]);
 
   useEffect(()=>{draw();},[draw]);
 
-  const onMove = useCallback(ev=>{
-    const cv=canvasRef.current; if(!cv) return;
-    const rect=cv.getBoundingClientRect();
-    const mx=(ev.clientX-rect.left)*(W/rect.width);
-    const my=(ev.clientY-rect.top)*(H/rect.height);
+  // Mouse -> cell lookup
+  function screenToCell(mx,my){
     let best=null,bestD=999;
     D.cells.forEach(c=>{
       const cx=toX(c.x),cy=toY(c.y);
       const d=Math.abs(mx-cx)+Math.abs(my-cy);
-      if(d<bestD&&d<SC){bestD=d;best=c;}
+      if(d<bestD && d<cellSZ){bestD=d;best=c;}
     });
+    return best;
+  }
+  const onMove = useCallback(ev=>{
+    const cv=canvasRef.current; if(!cv) return;
+    const rect=cv.getBoundingClientRect();
+    const mx=(ev.clientX-rect.left)*(BASE_W/rect.width);
+    const my=(ev.clientY-rect.top)*(BASE_H/rect.height);
+    if(dragging){
+      const dx=(ev.clientX-dragStart.current.x)*(BASE_W/rect.width);
+      const dy=(ev.clientY-dragStart.current.y)*(BASE_H/rect.height);
+      setPanX(panStart.current.x+dx);
+      setPanY(panStart.current.y+dy);
+      return;
+    }
+    const best=screenToCell(mx,my);
     if(best) setHovered({x:ev.clientX-rect.left,y:ev.clientY-rect.top,cell:best});
     else setHovered(null);
-  },[]);
+  },[zoom,panX,panY,dragging]);
 
-  // Stats for overlay mode
+  const onDown = useCallback(ev=>{
+    if(ev.button===0){
+      setDragging(true);
+      dragStart.current={x:ev.clientX,y:ev.clientY};
+      panStart.current={x:panX,y:panY};
+    }
+  },[panX,panY]);
+  const onUp = useCallback(()=>{setDragging(false);},[]);
+
+  // Wheel zoom
+  const onWheel = useCallback(ev=>{
+    ev.preventDefault();
+    const cv=canvasRef.current; if(!cv) return;
+    const rect=cv.getBoundingClientRect();
+    const mx=(ev.clientX-rect.left)*(BASE_W/rect.width);
+    const my=(ev.clientY-rect.top)*(BASE_H/rect.height);
+    const dir = ev.deltaY<0?1:-1;
+    const newZ = Math.max(0.8, Math.min(5, zoom*(1+dir*0.15)));
+    const ratio = newZ/zoom;
+    setPanX(mx - ratio*(mx-panX));
+    setPanY(my - ratio*(my-panY));
+    setZoom(newZ);
+  },[zoom,panX,panY]);
+
+  function doZoom(dir){
+    const cx=BASE_W/2, cy=BASE_H/2;
+    const newZ=Math.max(0.8,Math.min(5,zoom*(1+dir*0.3)));
+    const ratio=newZ/zoom;
+    setPanX(cx-ratio*(cx-panX));
+    setPanY(cy-ratio*(cy-panY));
+    setZoom(newZ);
+  }
+  function resetView(){setZoom(1);setPanX(0);setPanY(0);}
+
+  // Feedback
+  const MAX_CHARS = 500;
+  const MAX_VISIBLE = 50;
+  function submitComment(){
+    if(!fbText.trim()) return;
+    const newC = {
+      name: fbName.trim()||'Anonymous',
+      topic: fbTopic,
+      text: fbText.trim().slice(0, MAX_CHARS),
+      time: new Date().toLocaleString()
+    };
+    setComments([newC,...comments]);
+    setFbText('');
+  }
+  function downloadCSV(){
+    if(comments.length===0) return;
+    const header = 'Name,Topic,Comment,Timestamp\n';
+    const rows = comments.map(c => {
+      const esc = s => '"'+String(s).replace(/"/g,'""')+'"';
+      return [esc(c.name),esc(c.topic),esc(c.text),esc(c.time)].join(',');
+    }).join('\n');
+    const blob = new Blob([header+rows],{type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'community_feedback_'+new Date().toISOString().slice(0,10)+'.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Stats
   let allMatch=0,someMatch=0,noMatch=0;
   D.cells.forEach(c=>{
     const m=cellMatch(c);
@@ -199,8 +352,7 @@ function App(){
     else noMatch++;
   });
 
-  // Slider helper
-  function sld(label,valMin,setMin,valMax,setMax,absMin,absMax,step,color,fmt){
+  function sld(valMin,setMin,valMax,setMax,absMin,absMax,step,color,fmt){
     if(!fmt) fmt=v=>v;
     return e('div',null,
       e('div',{className:'sld'},
@@ -208,13 +360,13 @@ function App(){
         e('input',{type:'range',min:absMin,max:absMax,step:step,value:valMin,
           style:{accentColor:color},
           onChange:ev=>{setMin(Math.min(+ev.target.value,valMax));}}),
-        e('span',{className:'vl',style:{color:color}},fmt(valMin))),
+        e('span',{className:'vl',style:{color}},fmt(valMin))),
       e('div',{className:'sld'},
         e('label',null,'Max'),
         e('input',{type:'range',min:absMin,max:absMax,step:step,value:valMax,
           style:{accentColor:color},
           onChange:ev=>{setMax(Math.max(+ev.target.value,valMin));}}),
-        e('span',{className:'vl',style:{color:color}},fmt(valMax))));
+        e('span',{className:'vl',style:{color}},fmt(valMax))));
   }
 
   const LGD={
@@ -224,118 +376,163 @@ function App(){
     poverty:{g:'linear-gradient(90deg,#fef3c7,#fcd34d,#f59e0b,#92400e)',lo:'0%',hi:'70%'}
   };
 
-  const hovC = hovered ? hovered.cell : null;
-  const hovM = hovC ? cellMatch(hovC) : null;
+  const hovC=hovered?hovered.cell:null;
+  const hovM=hovC?cellMatch(hovC):null;
 
-  return e('div',{className:'row'},
-    e('div',{className:'side'},
-      // Display mode
-      e('div',{className:'cd'},
-        e('div',{className:'cd-t'},'Display Mode'),
-        ['overlay','temp','canopy','income','poverty'].map(id=>
-          e('label',{key:id,className:'radio-row',onClick:()=>setLayer(id)},
-            e('input',{type:'radio',name:'lyr',checked:layer===id,readOnly:true}),
-            e('span',{className:'sw',style:{background:
-              id==='overlay'?'linear-gradient(135deg,#fbbf24,#dc2626)':
-              id==='temp'?'linear-gradient(135deg,#fef9c3,#dc2626)':
-              id==='canopy'?'linear-gradient(135deg,#fef9c3,#14532d)':
-              id==='income'?'linear-gradient(135deg,#dbeafe,#1e3a8a)':
-              'linear-gradient(135deg,#fef3c7,#92400e)'}}),
-            id==='overlay'?'Filter Overlay (match all)':
-            id==='temp'?'Surface Temperature':
-            id==='canopy'?'Tree Canopy Cover':
-            id==='income'?'Median Income':'Poverty Rate'))),
+  const topicLabels={general:'General',heat:'Heat Preparedness',canopy:'Tree Canopy',equity:'Social Equity',action:'Action Items'};
 
-      // Temperature
-      e('div',{className:'cd'},
-        e('div',{className:'cd-t'},
-          e('label',{className:'chk'},
-            e('input',{type:'checkbox',checked:useTemp,onChange:()=>setUseTemp(!useTemp)}),
-            'Surface Temperature (\u00b0F)')),
-        sld('Temp',tempMin,setTempMin,tempMax,setTempMax,93,99,0.5,'#dc2626',v=>v+'\u00b0F')),
+  return e('div',null,
+    e('div',{className:'row'},
+      e('div',{className:'side'},
+        // Display mode
+        e('div',{className:'cd'},
+          e('div',{className:'cd-t'},'Display Mode'),
+          ['overlay','temp','canopy','income','poverty'].map(id=>
+            e('label',{key:id,className:'radio-row',onClick:()=>setLayer(id)},
+              e('input',{type:'radio',name:'lyr',checked:layer===id,readOnly:true}),
+              e('span',{className:'sw',style:{background:
+                id==='overlay'?'linear-gradient(135deg,#fbbf24,#dc2626)':
+                id==='temp'?'linear-gradient(135deg,#fef9c3,#dc2626)':
+                id==='canopy'?'linear-gradient(135deg,#fef9c3,#14532d)':
+                id==='income'?'linear-gradient(135deg,#dbeafe,#1e3a8a)':
+                'linear-gradient(135deg,#fef3c7,#92400e)'}}),
+              id==='overlay'?'Filter Overlay (match all)':
+              id==='temp'?'Surface Temperature':
+              id==='canopy'?'Tree Canopy Cover':
+              id==='income'?'Median Income':'Poverty Rate'))),
+        // Temp
+        e('div',{className:'cd'},
+          e('div',{className:'cd-t'},
+            e('label',{className:'chk'},
+              e('input',{type:'checkbox',checked:useTemp,onChange:()=>setUseTemp(!useTemp)}),
+              'Surface Temperature (\u00b0F)')),
+          sld(tempMin,setTempMin,tempMax,setTempMax,93,99,0.5,'#dc2626',v=>v+'\u00b0F')),
+        // Canopy
+        e('div',{className:'cd'},
+          e('div',{className:'cd-t'},
+            e('label',{className:'chk'},
+              e('input',{type:'checkbox',checked:useCan,onChange:()=>setUseCan(!useCan)}),
+              'Tree Canopy Cover (%)')),
+          sld(canMin,setCanMin,canMax,setCanMax,0,75,1,'#16a34a',v=>v+'%')),
+        // Income
+        e('div',{className:'cd'},
+          e('div',{className:'cd-t'},
+            e('label',{className:'chk'},
+              e('input',{type:'checkbox',checked:useInc,onChange:()=>setUseInc(!useInc)}),
+              'Median Household Income')),
+          sld(incMin,setIncMin,incMax,setIncMax,10000,220000,5000,'#2563eb',v=>'$'+(v/1000).toFixed(0)+'k')),
+        // Poverty
+        e('div',{className:'cd'},
+          e('div',{className:'cd-t'},
+            e('label',{className:'chk'},
+              e('input',{type:'checkbox',checked:usePov,onChange:()=>setUsePov(!usePov)}),
+              'Poverty Rate (%)')),
+          sld(povMin,setPovMin,povMax,setPovMax,0,75,1,'#d97706',v=>v+'%')),
+        // Overlays
+        e('label',{className:'chk',style:{marginTop:'0.1rem'}},
+          e('input',{type:'checkbox',checked:showTracts,onChange:()=>setShowTracts(!showTracts)}),
+          'Show census tract boundaries'),
+        // Stats
+        layer==='overlay' && e('div',{className:'stat-cd'},
+          e('div',{className:'cd-t'},'Matching Cells'),
+          e('div',{className:'stat-g'},
+            e('div',{className:'stat-b',style:{background:'#fef2f2'}},
+              e('div',{className:'stat-n',style:{color:'#dc2626'}},allMatch),
+              e('div',{className:'stat-l'},'All match')),
+            e('div',{className:'stat-b',style:{background:'#fff7ed'}},
+              e('div',{className:'stat-n',style:{color:'#f97316'}},someMatch),
+              e('div',{className:'stat-l'},'Partial')),
+            e('div',{className:'stat-b',style:{background:'#f8fafc'}},
+              e('div',{className:'stat-n',style:{color:'#94a3b8'}},noMatch),
+              e('div',{className:'stat-l'},'No match')))),
+        e('div',{className:'note'},'Social variables (income, poverty) mapped from census tract ACS data to 1 km\u00b2 grid. Scroll to zoom, drag to pan.')),
 
-      // Canopy
-      e('div',{className:'cd'},
-        e('div',{className:'cd-t'},
-          e('label',{className:'chk'},
-            e('input',{type:'checkbox',checked:useCan,onChange:()=>setUseCan(!useCan)}),
-            'Tree Canopy Cover (%)')),
-        sld('Can',canMin,setCanMin,canMax,setCanMax,0,75,1,'#16a34a',v=>v+'%')),
+      // Map column
+      e('div',null,
+        e('div',{className:'map-cd'},
+          e('div',{className:'map-t'},
+            layer==='overlay'?'Filter Overlay \u2014 cells matching all active criteria':
+            layer==='temp'?'Surface Temperature (\u00b0F)':
+            layer==='canopy'?'Tree Canopy Cover (%)':
+            layer==='income'?'Median Household Income ($)':'Poverty Rate (%)'),
+          e('div',{className:'cw'},
+            // Zoom controls
+            e('div',{className:'zoom-bar'},
+              e('button',{className:'zoom-btn',onClick:()=>doZoom(1)},'+'),
+              e('button',{className:'zoom-btn',onClick:()=>doZoom(-1)},'\u2212'),
+              e('button',{className:'zoom-btn',onClick:resetView,style:{fontSize:'0.7rem'}},'\u21ba'),
+              e('div',{className:'zoom-info'},Math.round(zoom*100)+'%')),
+            e('canvas',{ref:canvasRef,
+              onMouseMove:onMove,
+              onMouseDown:onDown,
+              onMouseUp:onUp,
+              onMouseLeave:()=>{setHovered(null);setDragging(false);},
+              onWheel:onWheel,
+              style:{cursor:dragging?'grabbing':'crosshair'}}),
+            hovered && !dragging && e('div',{className:'tip',style:{left:Math.min(hovered.x+12,BASE_W-210),top:hovered.y+12}},
+              e('div',null,e('b',null,'Grid: '),'Row '+hovC.r+', Col '+hovC.c),
+              hovC.tn && e('div',null,e('b',null,'Tract: '),hovC.tn),
+              e('div',{className:'sep'}),
+              e('div',null,e('b',null,'Temp: '),hovC.t!=null?e('span',{style:{color:'#dc2626'}},hovC.t.toFixed(1)+' \u00b0F'):'N/A'),
+              e('div',null,e('b',null,'Canopy: '),hovC.cn!=null?e('span',{style:{color:'#16a34a'}},hovC.cn.toFixed(1)+'%'):'N/A'),
+              e('div',null,e('b',null,'Impervious: '),hovC.im!=null?hovC.im.toFixed(1)+'%':'N/A'),
+              e('div',{className:'sep'}),
+              e('div',null,e('b',null,'Income: '),hovC.inc!=null?e('span',{style:{color:'#2563eb'}},'$'+hovC.inc.toLocaleString()):'N/A'),
+              e('div',null,e('b',null,'Poverty: '),hovC.pov!=null?e('span',{style:{color:'#d97706'}},hovC.pov+'%'):'N/A'),
+              layer==='overlay'&&hovM&&e('div',null,e('div',{className:'sep'}),
+                e('b',null,'Match: '),hovM.matched+'/'+hovM.active+' filters'))),
+          e('div',{className:'lgd'},
+            layer==='overlay'?[
+              e('div',{key:'a',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#dc2626'}}),'All match'),
+              e('div',{key:'b',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#f97316'}}),'Partial'),
+              e('div',{key:'c',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#fbbf24'}}),'1 match'),
+              e('div',{key:'d',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#e2e8f0'}}),'No match')
+            ]:[
+              e('div',{key:'bar'},
+                e('div',{className:'lgd-bar',style:{background:LGD[layer].g}}),
+                e('div',{className:'lgd-lbl'},e('span',null,LGD[layer].lo),e('span',null,LGD[layer].hi))),
+              e('div',{key:'nd',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#f8fafc',border:'1px solid #d1d5db'}}),'No data')
+            ],
+            showTracts&&e('div',{className:'lgd-item'},
+              e('span',{style:{display:'inline-block',width:14,height:0,borderTop:'1.5px solid rgba(55,65,81,0.55)',marginRight:3,verticalAlign:'middle'}}),'Tract boundary'),
+            e('div',{className:'lgd-item'},
+              e('span',{style:{display:'inline-block',width:6,height:6,borderRadius:'50%',background:'#1e293b',marginRight:3}}),'Landmarks'))))),
 
-      // Income
-      e('div',{className:'cd'},
-        e('div',{className:'cd-t'},
-          e('label',{className:'chk'},
-            e('input',{type:'checkbox',checked:useInc,onChange:()=>setUseInc(!useInc)}),
-            'Median Household Income')),
-        sld('Inc',incMin,setIncMin,incMax,setIncMax,10000,220000,5000,'#2563eb',v=>'$'+(v/1000).toFixed(0)+'k')),
-
-      // Poverty
-      e('div',{className:'cd'},
-        e('div',{className:'cd-t'},
-          e('label',{className:'chk'},
-            e('input',{type:'checkbox',checked:usePov,onChange:()=>setUsePov(!usePov)}),
-            'Poverty Rate (%)')),
-        sld('Pov',povMin,setPovMin,povMax,setPovMax,0,75,1,'#d97706',v=>v+'%')),
-
-      // Overlay
-      e('label',{className:'chk',style:{marginTop:'0.15rem'}},
-        e('input',{type:'checkbox',checked:showTracts,onChange:()=>setShowTracts(!showTracts)}),
-        'Show census tract boundaries'),
-
-      // Stats
-      layer==='overlay' && e('div',{className:'stat-cd'},
-        e('div',{className:'cd-t'},'Matching Cells'),
-        e('div',{className:'stat-g'},
-          e('div',{className:'stat-b',style:{background:'#fef2f2'}},
-            e('div',{className:'stat-n',style:{color:'#dc2626'}},allMatch),
-            e('div',{className:'stat-l'},'All match')),
-          e('div',{className:'stat-b',style:{background:'#fff7ed'}},
-            e('div',{className:'stat-n',style:{color:'#f97316'}},someMatch),
-            e('div',{className:'stat-l'},'Partial')),
-          e('div',{className:'stat-b',style:{background:'#f8fafc'}},
-            e('div',{className:'stat-n',style:{color:'#94a3b8'}},noMatch),
-            e('div',{className:'stat-l'},'No match')))),
-
-      e('div',{className:'note'},'235 census tracts. Social variables (income, poverty) are mapped from tract-level ACS data to the 1 km\u00b2 grid cells within each tract.')),
-
-    // Map
-    e('div',null,
-      e('div',{className:'map-cd'},
-        e('div',{className:'map-t'},
-          layer==='overlay'?'Filter Overlay \u2014 cells matching all active criteria':
-          layer==='temp'?'Surface Temperature (\u00b0F)':
-          layer==='canopy'?'Tree Canopy Cover (%)':
-          layer==='income'?'Median Household Income ($)':
-          'Poverty Rate (%)'),
-        e('div',{className:'cw'},
-          e('canvas',{ref:canvasRef,onMouseMove:onMove,onMouseLeave:()=>setHovered(null)}),
-          hovered && e('div',{className:'tip',style:{left:Math.min(hovered.x+12,W-210),top:hovered.y+12}},
-            e('div',null,e('b',null,'Grid: '),'Row '+hovC.r+', Col '+hovC.c),
-            hovC.tn && e('div',null,e('b',null,'Tract: '),hovC.tn),
-            e('div',{className:'sep'}),
-            e('div',null,e('b',null,'Temp: '),hovC.t!=null?e('span',{style:{color:'#dc2626'}},hovC.t.toFixed(1)+' \u00b0F'):'N/A'),
-            e('div',null,e('b',null,'Canopy: '),hovC.cn!=null?e('span',{style:{color:'#16a34a'}},hovC.cn.toFixed(1)+'%'):'N/A'),
-            e('div',null,e('b',null,'Impervious: '),hovC.im!=null?hovC.im.toFixed(1)+'%':'N/A'),
-            e('div',{className:'sep'}),
-            e('div',null,e('b',null,'Income: '),hovC.inc!=null?e('span',{style:{color:'#2563eb'}},'$'+hovC.inc.toLocaleString()):'N/A'),
-            e('div',null,e('b',null,'Poverty: '),hovC.pov!=null?e('span',{style:{color:'#d97706'}},hovC.pov+'%'):'N/A'),
-            layer==='overlay' && hovM && e('div',null,e('div',{className:'sep'}),
-              e('b',null,'Match: '),hovM.matched+' / '+hovM.active+' filters'))),
-        e('div',{className:'lgd'},
-          layer==='overlay' ? [
-            e('div',{key:'a',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#dc2626'}}),'All match'),
-            e('div',{key:'b',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#f97316'}}),'Partial'),
-            e('div',{key:'c',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#fbbf24'}}),'1 match'),
-            e('div',{key:'d',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#e2e8f0'}}),'No match')
-          ] : [
-            e('div',{key:'bar'},
-              e('div',{className:'lgd-bar',style:{background:LGD[layer].g}}),
-              e('div',{className:'lgd-lbl'},e('span',null,LGD[layer].lo),e('span',null,LGD[layer].hi))),
-            e('div',{key:'nd',className:'lgd-item'},e('span',{className:'lgd-sq',style:{background:'#f8fafc',border:'1px solid #d1d5db'}}),'No data')
-          ],
-          showTracts && e('div',{className:'lgd-item'},
-            e('span',{style:{display:'inline-block',width:14,height:0,borderTop:'1.5px solid rgba(100,116,139,0.5)',marginRight:3,verticalAlign:'middle'}}),'Tract boundary')))));
+    // Feedback section
+    e('div',{className:'fb-section'},
+      e('div',{className:'fb-title'},'Community Feedback & Observations'),
+      e('div',{className:'fb-sub'},'Share your local knowledge, comments, or suggestions about heat vulnerability and preparedness in your area. Your input helps shape community response strategies.'),
+      e('div',{className:'fb-form'},
+        e('div',{className:'fb-row'},
+          e('input',{className:'fb-input',placeholder:'Your name (optional)',value:fbName,onChange:ev=>setFbName(ev.target.value)}),
+          e('select',{className:'fb-input',value:fbTopic,onChange:ev=>setFbTopic(ev.target.value)},
+            e('option',{value:'general'},'General Comment'),
+            e('option',{value:'heat'},'Heat Preparedness'),
+            e('option',{value:'canopy'},'Tree Canopy / Green Space'),
+            e('option',{value:'equity'},'Social Equity Concern'),
+            e('option',{value:'action'},'Action Item / Suggestion'))),
+        e('div',{style:{position:'relative'}},
+          e('textarea',{className:'fb-textarea',placeholder:'Share your observations, local knowledge, or suggestions about this area...',
+            value:fbText,maxLength:MAX_CHARS,
+            onChange:ev=>setFbText(ev.target.value)}),
+          e('div',{style:{textAlign:'right',fontSize:'0.65rem',color:fbText.length>MAX_CHARS*0.9?'#dc2626':'#94a3b8',marginTop:'0.15rem'}},
+            fbText.length+' / '+MAX_CHARS)),
+        e('div',{style:{display:'flex',gap:'0.5rem',alignItems:'center'}},
+          e('button',{className:'fb-btn',onClick:submitComment},'Submit Comment'),
+          comments.length>0 && e('button',{className:'fb-btn',onClick:downloadCSV,
+            style:{background:'#fff',color:'#1a2744',border:'1px solid #cbd5e1'}},
+            'Download All ('+comments.length+' comments) as CSV'))),
+      comments.length>0 && e('div',null,
+        e('div',{style:{fontSize:'0.72rem',color:'#64748b',marginTop:'0.6rem',marginBottom:'0.3rem'}},
+          'Showing '+Math.min(comments.length,MAX_VISIBLE)+' of '+comments.length+' comments'),
+        e('div',{className:'fb-list'},
+          comments.slice(0,MAX_VISIBLE).map((c,i)=>
+            e('div',{key:i,className:'fb-card'},
+              e('div',{className:'fb-card-head'},
+                e('span',{className:'fb-card-name'},c.name),
+                e('span',{className:'fb-card-time'},c.time)),
+              e('div',{className:'fb-card-body'},c.text),
+              e('span',{className:'fb-card-topic'},topicLabels[c.topic]||c.topic)))))));
 }
 ReactDOM.render(e(App),document.getElementById('root'));
 </script>
