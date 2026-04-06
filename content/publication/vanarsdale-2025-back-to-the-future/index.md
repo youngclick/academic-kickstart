@@ -1,6 +1,7 @@
 ---
 title: "The Past, Present, and Future Mississippi River"
 date: 2023-01-01
+publishDate: 2023-01-01T00:00:00Z
 authors: ["R.Van Arsdale", "Y.Kwon", "R.Cox", "D.Lumsden"]
 publication_types: ["2"]
 abstract: "This article synthesizes historical and contemporary perspectives on Mississippi River dynamics to contextualize present-day geomorphic and environmental challenges."
