@@ -7,5 +7,5 @@ abstract: "This study shows how upper mantle heterogeneity and weak subduction b
 featured: false
 publication: "*Geophysical Research Letters*"
 doi: "10.1029/2025GL119915"
-url_pdf: ""
+url_pdf: "/files/publications/24_Lee_UpperMantleHeterogeneity_2026.pdf"
 ---

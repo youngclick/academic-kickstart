@@ -1,4 +1,5 @@
 ---
+url_pdf: "/files/publications/20_Giles_SedimentTransportGulfMexico_2023.pdf"
 title: "Sediment input, alongshore transport, and coastal mixing in the northeastern Gulf of Mexico based on detrital-zircon geochronology"
 date: 2023-01-01
 publishDate: 2023-01-01T00:00:00.228090Z

@@ -7,5 +7,5 @@ abstract: "Study on Pliocene drainage history in Manitoba and northwestern Ontar
 featured: false
 publication: "*The Journal of Geology*"
 doi: "10.1086/722972"
-url_pdf: ""
+url_pdf: "/files/publications/18_VanArsdale_PlioceneDrainageManitoba_2022.pdf"
 ---

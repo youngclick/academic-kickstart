@@ -7,5 +7,5 @@ abstract: "This article synthesizes historical and contemporary perspectives on 
 featured: false
 publication: "*The Journal of Geology*"
 doi: "10.1086/730560"
-url_pdf: ""
+url_pdf: "/files/publications/25_VanArsdale_BackToFutureMississippiRiver_InPress.pdf"
 ---

@@ -7,5 +7,5 @@ abstract: "This study examines tree migration potential in eastern U.S. forests 
 featured: false
 publication: "*Forest Ecology and Management*"
 doi: ""
-url_pdf: ""
+url_pdf: "/files/publications/23_Kwon_TreeMigrationPotential_2025.pdf"
 ---
