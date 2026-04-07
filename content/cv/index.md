@@ -7,8 +7,9 @@ type: "page"
 
 ## Curriculum Vitae
 
-You can view and download the full CV below.
+You can download the full CV below.
 
-- **Download PDF:** [Download CV](/files/cv.pdf)
+- **Download CV (DOCX):** [CV_KWON_Full_2026.docx](/files/CV_KWON_Full_2026.docx)
+- **Existing PDF version:** [cv.pdf](/files/cv.pdf)
 
-<iframe src="/files/cv.pdf" width="100%" height="1200px" style="border: 1px solid #ddd; border-radius: 8px;"></iframe>
+> If you share a PDF export of the new full CV, I can replace `cv.pdf` so the embedded on-page viewer always matches the latest version.
